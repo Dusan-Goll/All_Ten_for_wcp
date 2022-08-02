@@ -3,8 +3,8 @@
   in command-prompt (for Windows)
 - by Dušan Goll"""
 
-# TODO: / generator.py: create a database of automatically generated lessons
-#         according letter-rows and letters
+# TODO: / create while loop for main menu
+#       / generator.py: create a database of lessons (automatically generated texts)
 #       / add speed of typing
 #       / add final stats after completing the lesson
 #       / text wrapping
@@ -16,7 +16,8 @@ from msvcrt import getch
 from colorama import Fore, Back, Style, init, deinit
 import trial_generator
 
-text = trial_generator.generate()
+
+text = trial_generator.generate()  # here will be generator.base_menu() instead
 line_length = 49
 separ = '-' * line_length
 
