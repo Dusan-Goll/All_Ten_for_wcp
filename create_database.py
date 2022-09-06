@@ -92,8 +92,35 @@ def lessonFour():
     return lines
 
 
+def lessonFive():
+    combsA = ["dkj", "dkf", "djk", "dfk", "kdj", "kdf", "kjd", "kfd",
+              "jdk", "fdk", "jkd", "fkd"]
+    combsB = ["dkd", "djd", "dfd", "kdk", "kjk", "kfk"]
+    combsC = ["fdj", "fkj", "jdf", "jkf", "djf", "dfj", "kjf", "kfj"]
+    lineLength = (len(combsA[0]) + 1) * (6 + 2 + 1) * 2  # (3+1)*9*2=72
+    lines = []
+    for i in range(3):  # number of lines
+        line = ''
+        while len(line) < lineLength:
+            random.shuffle(combsA)
+            for comb in combsA[:6]:
+                line += comb + ' '
+            random.shuffle(combsB)
+            for comb in combsB[:2]:
+                line += comb + ' '
+            for comb in combsC:
+                line += random.choice(combsC) + ' '
+        line = line.rstrip()  # delete space at the end of text
+        lines.append(line + '\n')
+
+    file = open(f"{folderName}\\lesson_05_dkj.txt", mode='w')
+    file.writelines(lines)
+    file.close()
+    return lines
+
+
 # function call+
-# linesLst = lessonFour()
+linesLst = lessonFive()
 
 # if __name__ == '__main__':
 #     for row in linesLst:
