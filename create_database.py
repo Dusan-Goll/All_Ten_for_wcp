@@ -108,8 +108,7 @@ def lessonFive():
             random.shuffle(combsB)
             for comb in combsB[:2]:
                 line += comb + ' '
-            for comb in combsC:
-                line += random.choice(combsC) + ' '
+            line += random.choice(combsC) + ' '
         line = line.rstrip()  # delete space at the end of text
         lines.append(line + '\n')
 
