@@ -20,6 +20,8 @@ txt_files = os.listdir(lessons_folder)
 
 
 def main():
+    """Welcome the user, activate colors, display menu and let the user choose
+    (run lesson or quit), deactivate colors and quit."""
     os.system('cls')
     print("""
 Dušan Goll presents:
@@ -49,25 +51,30 @@ Press Enter to start.
 
 
 def screen(index, character, _text_, _typo_):
+    """return lesson text with actual position to display"""
     return 'For exit press "esc" button.\n' + SEP + '\n' \
            + _text_[:index] + yellowed(character) + _text_[index + 1:]\
            + '\n' + SEP + '\n' + _text_[:index] + reded(_typo_)
 
 
 def message(mistakes):
+    """return final message and mistakes count"""
     return Back.GREEN + Fore.LIGHTWHITE_EX + Style.BRIGHT + 'You Got it!' \
            + Style.RESET_ALL + f'\nYou have missed {mistakes}-times.'
 
 
 def reded(wrong_typo):
+    """color wrong typo to red"""
     return Back.RED + Style.BRIGHT + wrong_typo + Style.RESET_ALL
 
 
 def yellowed(_char_):
+    """color actual letter background to yellow"""
     return Back.YELLOW + Style.BRIGHT + _char_ + Style.RESET_ALL
 
 
 def run_lesson(text_list):
+    """display text for typing, wait for user's typo and handle it"""
     missed = 0
     for line in text_list:
         line = line.replace('\n', '')
@@ -89,6 +96,7 @@ def run_lesson(text_list):
 
 
 def options_dict(lessons_list):
+    """return dictionary of menu options"""
     first_parts = [file[:9] for file in lessons_list]
     second_parts = [file[9:].split('.')[0].lstrip('_') for file in lessons_list]
     lesson_names = [f'{a} ({b})' for a, b in zip(first_parts, second_parts)]
@@ -99,6 +107,7 @@ def options_dict(lessons_list):
 
 
 def display_menu(lessons):
+    """display menu options from dictionary"""
     os.system('cls')
     print('MENU:')
     for key in options_dict(lessons):
@@ -106,6 +115,7 @@ def display_menu(lessons):
 
 
 def user_option(lessons_list):
+    """return user's correct choice from menu options"""
     choice = ''
     choices = [str(x) for x in range(len(lessons_list) + 1)]
     while choice not in choices:
