@@ -118,8 +118,68 @@ def lessonFive():
     return lines
 
 
+def quatroTwoOneOne(first, second, minors):
+    comb = [first, first, second, random.choice(minors)]
+    random.shuffle(comb)
+    comb_str = ''
+    for letter in comb:
+        comb_str += letter
+    return comb_str
+
+
+def quatroOneTwoOne(duo, minors):
+    random.shuffle(minors)
+    minorA = minors.pop()
+    minorB = minors.pop()
+    comb = [random.choice(duo), minorA, minorA, minorB]
+    random.shuffle(comb)
+    comb_str = ''
+    for letter in comb:
+        comb_str += letter
+    return comb_str
+
+
+def sextuplet(majors, minors):
+    a, b = majors
+    c, d = minors
+    comb = [a, a, b, b, c, d]
+    random.shuffle(comb)
+    comb_str = ''
+    for letter in comb:
+        comb_str += letter
+    return comb_str
+
+
+def lessonSix():
+    letters = ['d', 'k', 'f', 'j']
+    lineLength = (4 + 1) * (6 * 2 + 1) + (6 + 1) * 1  # =72
+    lines = []
+    for i in range(3):  # number of lines
+        line = ''
+        while len(line) < lineLength:
+            for ix in range(2):
+                line += quatroTwoOneOne('d', 'k', ('f', 'j')) + ' '\
+                        + quatroTwoOneOne('k', 'd', ('f', 'j')) + ' '\
+                        + random.choice(['dkdk', 'kdkd']) + ' '\
+                        + quatroTwoOneOne('d', 'k', ('f', 'j')) + ' '\
+                        + quatroTwoOneOne('k', 'd', ('f', 'j')) + ' '
+                for inx in range(4):
+                    random.shuffle(letters)
+                    line += letters.pop()
+                letters = ['d', 'k', 'f', 'j']
+                line += ' '
+            line += quatroOneTwoOne(('d', 'k'), ['f', 'j']) + ' '
+            line += sextuplet(['d', 'k'], ['f', 'j']) + ' '
+        lines.append(line.rstrip() + '\n')  # newline ending of line
+
+    file = open(f"{folderName}\\lesson_06_dkfj.txt", mode='w')
+    file.writelines(lines)
+    file.close()
+    return lines
+
+
 # function call+
-linesLst = lessonFive()
+linesLst = lessonSix()
 
 # if __name__ == '__main__':
 #     for row in linesLst:
