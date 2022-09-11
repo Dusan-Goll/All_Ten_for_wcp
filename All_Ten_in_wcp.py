@@ -10,6 +10,7 @@
 #       / add docstrings to functions
 
 import os
+import time
 from msvcrt import getch
 from colorama import Fore, Back, Style, init, deinit
 
@@ -57,10 +58,10 @@ def screen(index, character, _text_, _typo_):
            + '\n' + SEP + '\n' + _text_[:index] + reded(_typo_)
 
 
-def message(mistakes):
+def message():
     """return final message and mistakes count"""
     return Back.GREEN + Fore.LIGHTWHITE_EX + Style.BRIGHT + 'You Got it!' \
-           + Style.RESET_ALL + f'\nYou have missed {mistakes}-times.'
+        + Style.RESET_ALL
 
 
 def reded(wrong_typo):
@@ -75,23 +76,44 @@ def yellowed(_char_):
 
 def run_lesson(text_list):
     """display text for typing, wait for user's typo and handle it"""
-    missed = 0
+    first_hit = True
+    typos_count, speed, speed_sum, missed, missed_total = 0, 0, 0, 0, 0
     for line in text_list:
         line = line.replace('\n', '')
         for ix, char in enumerate(line):
             typo = ''
             while typo != char:  # print text and wait for correct typo
                 os.system('cls')
+                print('actual speed:', speed, '   missed:', missed + missed_total)
                 print(screen(ix, char, line, typo))
                 typo_raw = getch()
+                typos_count += 1
+                #
+                if first_hit:
+                    start_time = begin = time.time()  # start counting
+                    first_hit = False
+                elif time.time() - start_time >= 60:  # stop after 1 minute
+                    speed = typos_count - missed  # actual speed in secs
+                    missed_total += missed
+                    speed_sum += speed
+                    typos_count, missed = 0, 0  # reset typos_count and mistakes
+                    start_time = time.time()  # reset time counting
+                #
                 typo = typo_raw.decode("utf-8")
                 if typo == '\x1b':  # ESC button immediately quits the lesson
                     return
                 if typo != char:
                     missed += 1
+    speed_sum += typos_count - missed  # add part of last minute
+    missed_total += missed
+    total_time = round(((time.time() - begin) / 60), 1)
+    total_speed = round(speed_sum / total_time, 0)
     os.system('cls')
     print(SEP)
-    print(message(missed), '\n')
+    print(message())
+    print(f'You have missed {missed_total}-times.')
+    print(f'your typing speed: {total_speed} hits per minute')
+    print(f'total time: {total_time} min\n')
     input('Press Enter to continue...\n> ')
 
 
@@ -120,7 +142,7 @@ def user_option(lessons_list):
     choices = [str(x) for x in range(len(lessons_list) + 1)]
     while choice not in choices:
         display_menu(lessons_list)
-        choice = input('Please select option (write number)'
+        choice = input('\nPlease select option (write number)'
                        ' and press Enter:\n> ')
     return choice
 
