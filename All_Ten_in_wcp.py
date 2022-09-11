@@ -3,12 +3,6 @@
   in command-prompt (for Windows)
 """
 
-# TODO: / add speed of typing
-#       / add final stats after completing the lesson
-#       / add display with actual speed and count of miss-typos
-#       / possibility of backspace requirement (big task)
-#       / add docstrings to functions
-
 import os
 import time
 from msvcrt import getch
