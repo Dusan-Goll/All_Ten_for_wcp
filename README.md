@@ -1,5 +1,5 @@
 # All_Ten_for_wcp  
-Small python program to practise writing by all ten fingers.  
+Small python program to practice writing by all ten fingers.  
 Program is intended for executing via Python in windows command prompt.  
   
 ## . . .  this project is still unfinished . . .
